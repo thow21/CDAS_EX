@@ -180,6 +180,6 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.getProduct).Methods("GET")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.updateProduct).Methods("PUT")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.deleteProduct).Methods("DELETE")
-	a.Router.HandleFunc("/products/deleteall", a.clearProducts).Methods("POST")
-	a.Router.HandleFunc("products/mostexpensive", a.getMostExpensiveProduct).Methods("GET")
+	a.Router.HandleFunc("/products/deleteall", a.clearProducts).Methods("DELETE")
+	a.Router.HandleFunc("/products/mostexpensive", a.getMostExpensiveProduct).Methods("GET")
 }

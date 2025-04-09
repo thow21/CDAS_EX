@@ -127,8 +127,6 @@ func TestGetProduct(t *testing.T) {
 	checkResponseCode(t, http.StatusOK, response.Code)
 }
 
-// main_test.go
-
 func addProducts(count int) {
 	if count < 1 {
 		count = 1
@@ -189,4 +187,51 @@ func TestDeleteProduct(t *testing.T) {
 	req, _ = http.NewRequest("GET", "/product/1", nil)
 	response = executeRequest(req)
 	checkResponseCode(t, http.StatusNotFound, response.Code)
+}
+
+func TestClearProducts(t *testing.T) {
+	clearTable()
+	addProducts(10)
+
+	req, _ := http.NewRequest("GET", "/products", nil)
+	response := executeRequest(req)
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	var products []product
+	json.Unmarshal(response.Body.Bytes(), &products)
+
+	if len(products) != 10 {
+		t.Errorf("Expected 10 products in the table. Got %d", len(products))
+	}
+
+	req, _ = http.NewRequest("DELETE", "/products/deleteall", nil)
+	response = executeRequest(req)
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	req, _ = http.NewRequest("GET", "/products", nil)
+	response = executeRequest(req)
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	json.Unmarshal(response.Body.Bytes(), &products)
+	if len(products) != 0 {
+		t.Errorf("Expected 0 products in the table. Got %d", len(products))
+	}
+}
+
+func TestGetMostExpensiveProduct(t *testing.T) {
+	clearTable()
+	addProducts(10)
+
+	req, _ := http.NewRequest("GET", "/products/mostexpensive", nil)
+	response := executeRequest(req)
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	var product product
+	json.Unmarshal(response.Body.Bytes(), &product)
+
+	println(product.ID)
+
+	if product.Price != 100.0 {
+		t.Errorf("Expected the most expensive product to be 100.0. Got %v", product.Price)
+	}
 }
