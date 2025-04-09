@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="go build github.com/thow21/CDAS_EX" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+    <module name="CDAS_EX" />
+    <working_directory value="$PROJECT_DIR$" />
+    <envs>
+      <env name="APP_DB_USERNAME" value="postgres" />
+      <env name="APP_DB_PASSWORD" value="postgres" />
+      <env name="APP_DB_NAME" value="postgres" />
+    </envs>
+    <kind value="PACKAGE" />
+    <package value="github.com/thow21/CDAS_EX" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/main.go" />
+    <method v="2" />
+  </configuration>
+</component>
