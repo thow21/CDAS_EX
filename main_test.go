@@ -222,7 +222,7 @@ func TestClearProducts(t *testing.T) {
 
 func TestGetMostExpensiveProduct(t *testing.T) {
 	clearTable()
-	//addProducts(10)
+	addProducts(10)
 
 	req, _ := http.NewRequest("GET", "/products/mostexpensive", nil)
 	response := executeRequest(req)
