@@ -123,7 +123,7 @@ func TestGetProduct(t *testing.T) {
 	clearTable()
 	addProducts(1)
 
-	req, _ := http.NewRequest("GET", "/product/1", nil)
+	req, _ := http.NewRequest("GET", endpoint, nil)
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -144,13 +144,13 @@ func TestUpdateProduct(t *testing.T) {
 	clearTable()
 	addProducts(1)
 
-	req, _ := http.NewRequest("GET", "/product/1", nil)
+	req, _ := http.NewRequest("GET", endpoint, nil)
 	response := executeRequest(req)
 	var originalProduct map[string]interface{}
 	json.Unmarshal(response.Body.Bytes(), &originalProduct)
 
 	var jsonStr = []byte(`{"name":"test product - updated name", "price": 11.22}`)
-	req, _ = http.NewRequest("PUT", "/product/1", bytes.NewBuffer(jsonStr))
+	req, _ = http.NewRequest("PUT", endpoint, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 
 	response = executeRequest(req)
@@ -177,16 +177,16 @@ func TestDeleteProduct(t *testing.T) {
 	clearTable()
 	addProducts(1)
 
-	req, _ := http.NewRequest("GET", "/product/1", nil)
+	req, _ := http.NewRequest("GET", endpoint, nil)
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusOK, response.Code)
 
-	req, _ = http.NewRequest("DELETE", "/product/1", nil)
+	req, _ = http.NewRequest("DELETE", endpoint, nil)
 	response = executeRequest(req)
 
 	checkResponseCode(t, http.StatusOK, response.Code)
 
-	req, _ = http.NewRequest("GET", "/product/1", nil)
+	req, _ = http.NewRequest("GET", endpoint, nil)
 	response = executeRequest(req)
 	checkResponseCode(t, http.StatusNotFound, response.Code)
 }
