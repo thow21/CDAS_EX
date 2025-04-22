@@ -39,16 +39,16 @@ jobs:
         run: go mod download
       - name: Start postgresql Container
         run: docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=${APP_DB_PASSWORD} -e POSTGRES_USER=${APP_DB_USERNAME} -e POSTGRES_DB=${APP_DB_NAME} -d postgres
-               - name: Wait for PostgreSQL to become ready
-               run: |
-                 for i in {1..30}; do
-                   if docker exec postgres pg_isready -U ${APP_DB_USERNAME}; then
-                     echo "PostgreSQL is ready";
-                     break;
-                   fi
-                   echo "Waiting for PostgreSQL to be ready...";
-                   sleep 2;
-                 done
+      - name: Wait for PostgreSQL to become ready
+        run: |
+          for i in {1..30}; do
+            if docker exec postgres pg_isready -U ${APP_DB_USERNAME}; then
+              echo "PostgreSQL is ready";
+              break;
+            fi
+            echo "Waiting for PostgreSQL to be ready...";
+            sleep 2;
+          done
       - name: Build the application
         run: go build -o myapp .
       - name: Run tests
