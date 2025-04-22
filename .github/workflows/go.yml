@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: go mod download
       - name: Start postgresql Container
-        run: docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=${APP_DB_PASSWORD} -e POSTGRES_USER=${APP_DB_USERNAME} -e POSTGRES_DB=${APP_DB_NAME} -d postgres
+        run: docker compose up -d
       - name: Wait for PostgreSQL to become ready
         run: |
           for i in {1..30}; do
@@ -44,15 +44,21 @@ jobs:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarqube-scan-action@v5.0.0
         with:
-          fetch-depth: 0
-      - uses:
-          sonarsource/sonarcloud-github-action@master
+          projectBaseDir: .
+            args: >
+              -Dsonar.organization=thow21
+              -Dsonar.projectKey=CDAS_EX
+              -Dsonar.sources=.
+              -Dsonar.go.coverage.reportPaths=coverage.out
+              -Dsonar.verbose=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECT_KEY: CDAS_EX
-          SONAR_ORGANIZATION: thow21
 
 
