@@ -20,6 +20,8 @@ type App struct {
 	DB     *sql.DB
 }
 
+const productendpoint = "/product/{id:[0-9]+}"
+
 func (a *App) Initialize(user, password, dbname string) {
 	connectionString :=
 		fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", user, password, dbname)
@@ -177,9 +179,9 @@ func (a *App) getMostExpensiveProduct(w http.ResponseWriter, r *http.Request) {
 func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/products", a.getProducts).Methods("GET")
 	a.Router.HandleFunc("/product", a.createProduct).Methods("POST")
-	a.Router.HandleFunc("/product/{id:[0-9]+}", a.getProduct).Methods("GET")
-	a.Router.HandleFunc("/product/{id:[0-9]+}", a.updateProduct).Methods("PUT")
-	a.Router.HandleFunc("/product/{id:[0-9]+}", a.deleteProduct).Methods("DELETE")
+	a.Router.HandleFunc(productendpoint, a.getProduct).Methods("GET")
+	a.Router.HandleFunc(productendpoint, a.updateProduct).Methods("PUT")
+	a.Router.HandleFunc(productendpoint, a.deleteProduct).Methods("DELETE")
 	a.Router.HandleFunc("/products/deleteall", a.clearProducts).Methods("DELETE")
 	a.Router.HandleFunc("/products/mostexpensive", a.getMostExpensiveProduct).Methods("GET")
 }
