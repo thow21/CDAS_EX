@@ -51,5 +51,3 @@ jobs:
         run: go test -v ./...
       - name: Build the application
         run: go build -o myapp .
-      - name: Run the application
-        run: ./myapp
