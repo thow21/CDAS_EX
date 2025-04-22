@@ -33,11 +33,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Start postgresql Container
         run: docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=${APP_DB_PASSWORD} -e POSTGRES_USER=${APP_DB_USERNAME} -e POSTGRES_DB=${APP_DB_NAME} -d postgres
-        with:
-          postgresql version: 'latest'
-          postgresql dbname: ${{ env.APP_DB_NAME }}
-          postgresql username: ${{ env.APP_DB_USERNAME }}
-          postgresql password: ${{ env.APP_DB_PASSWORD }}
       - name: Run database migrations
         run: |
           echo "Running database migrations..."
