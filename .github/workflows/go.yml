@@ -39,3 +39,18 @@ jobs:
         run: go build -o myapp .
       - name: Run tests
         run: go test -v ./...
+  sonarCloud:
+    needs: Build-and-test
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses:
+          sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
