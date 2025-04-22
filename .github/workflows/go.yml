@@ -52,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          projectKey: CDAS_EX
-          organization: thow21
+          SONAR_PROJECT_KEY: CDAS_EX
+          SONAR_ORGANIZATION: thow21
 
 
