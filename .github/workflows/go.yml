@@ -41,22 +41,22 @@ jobs:
         run: go test -v ./...
   sonarCloud:
     needs: Build-and-test
-    name: SonarCloud Analysis
+    #name: SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarqube-scan-action@v5.0.0
         with:
           projectBaseDir: .
-            args: >
-              -Dsonar.organization=thow21
-              -Dsonar.projectKey=CDAS_EX
-              -Dsonar.sources=.
-              -Dsonar.go.coverage.reportPaths=coverage.out
-              -Dsonar.verbose=true
+          args: >
+            -Dsonar.organization=thow21
+            -Dsonar.projectKey=CDAS_EX
+            -Dsonar.sources=.
+            -Dsonar.go.coverage.reportPaths=coverage.out
+            -Dsonar.verbose=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
