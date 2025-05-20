@@ -53,9 +53,14 @@ jobs:
         run: echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Build and push
         run: |
-          docker build -t thow2025/myimage:${{ env.GIT_SHA }} .
+          docker build -t thow2025/myimage:latest .
           docker tag thow2025/myimage:latest thow2025/myimage:${{ env.GIT_SHA }}
-          
+
+      - name: Push Docker image
+        run: |
+          docker push thow2025/myimage:latest
+          docker push thow2025/myimage:${{ env.GIT_SHA }}
+
 
   sonarCloud:
     needs: Build-and-test
