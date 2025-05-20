@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine
+FROM golang:1.23-alpine
 
 # Set maintainer label: maintainer=[YOUR-EMAIL]
 LABEL maintainer=thomas.wagner@students.fh-hagenberg.at
