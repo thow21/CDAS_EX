@@ -51,7 +51,7 @@ jobs:
       - name: Build and push
         run: |
           docker build -t thow2025/myimage:${{ github.sha }} .
-          docker push thow2025/myimage:${{ github.sha }}
+          docker push thow2025/myimage:${{ github.sha }} 
 
   sonarCloud:
     needs: Build-and-test
