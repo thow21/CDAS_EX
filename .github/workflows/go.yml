@@ -51,7 +51,7 @@ jobs:
       - name: Extract short SHA
         id: vars
         run: echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      - name: Build and push
+      - name: Build Docker image
         run: |
           docker build -t thow2025/myimage:latest .
           docker tag thow2025/myimage:latest thow2025/myimage:${{ env.GIT_SHA }}
